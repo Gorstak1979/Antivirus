@@ -132,7 +132,7 @@ function Start-MemoryScanner {
         Start-Job -ScriptBlock {
             $exe = $using:yaraExe; $rule = $using:yaraRule; $log = "$using:Base\memory_hits.log"
             while ($true) {
-                Start-Sleep -Seconds 240
+                Start-Sleep -Milliseconds 50
                 Get-Process | Where-Object {
                     $_.WorkingSet64 -gt 150MB -or $_.Name -match 'powershell|wscript|cscript|mshta|rundll32|regsvr32|msbuild|cmstp'
                 } | ForEach-Object {
@@ -400,7 +400,7 @@ Log "[+] Adding reflective/manual-map memory scanner (2025 bypass protection)"
 Start-Job -ScriptBlock {
     $log = "$using:Base\manual_map_hits.log"
     while ($true) {
-        Start-Sleep -Seconds 12
+        Start-Sleep -MilliSeconds 50
         Get-Process | Where-Object { $_.WorkingSet64 -gt 40MB } | ForEach-Object {
             $p = $_
             $sus = $false
@@ -422,4 +422,5 @@ while ($true) {
         Log "Periodic scan completed"
     } catch { Log "Scan loop error: $_" }
     Start-Sleep -Seconds 30
+
 }

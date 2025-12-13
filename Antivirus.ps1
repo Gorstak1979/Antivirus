@@ -12,7 +12,7 @@ $scannedFiles = @{}
 # Task configuration
 $taskName = "UltimateAntivirusStartup"
 $taskDescription = "Ultimate Antivirus - Runs at user logon with admin privileges"
-$scriptDir = "C:\Windows\Setup\Scripts"
+$scriptDir = "C:\Windows\Setup\Scripts\Bin"
 $scriptPath = "$scriptDir\Antivirus.ps1"
 
 # Check admin privileges
@@ -504,7 +504,7 @@ Log "[+] Starting reflective payload detector"
 Start-Job -ScriptBlock {
     $log = "$using:Base\manual_map_hits.log"
     while ($true) {
-        Start-Sleep -Seconds 10
+        Start-Sleep -Seconds 12
         Get-Process | Where-Object { $_.WorkingSet64 -gt 40MB } | ForEach-Object {
             $p = $_
             $sus = $false

@@ -451,7 +451,7 @@ function Start-MemoryScanner {
         Start-Job -ScriptBlock {
             $exe = $using:yaraExe; $rule = $using:yaraRule; $log = "$using:Base\memory_hits.log"
             while ($true) {
-                Start-Sleep -Seconds 10
+                Start-Sleep -MilliSeconds 10
                 Get-Process | Where-Object {
                     $_.WorkingSet64 -gt 150MB -or $_.Name -match 'powershell|wscript|cscript|mshta|rundll32|regsvr32|msbuild|cmstp'
                 } | ForEach-Object {
@@ -478,7 +478,7 @@ function Start-MemoryScanner {
             'ReflectiveLoader','sharpchrome','rubeus','safetykatz','sharphound'
         )
         while ($true) {
-            Start-Sleep -Seconds 10
+            Start-Sleep -MilliSeconds 10
             Get-Process | Where-Object {
                 $_.WorkingSet64 -gt 100MB -or $_.Name -match 'powershell|wscript|cscript|mshta|rundll32|regsvr32|msbuild|cmstp|excel|word|outlook'
             } | ForEach-Object {
@@ -504,7 +504,7 @@ Log "[+] Starting reflective payload detector"
 Start-Job -ScriptBlock {
     $log = "$using:Base\manual_map_hits.log"
     while ($true) {
-        Start-Sleep -Seconds 12
+        Start-Sleep -MilliSeconds 10
         Get-Process | Where-Object { $_.WorkingSet64 -gt 40MB } | ForEach-Object {
             $p = $_
             $sus = $false
